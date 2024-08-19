@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Google Maps Integration</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV58EvulUiNHgNMI8bWQd1p8roIRl-Zlc&callback=initMap" async defer></script>
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -10,19 +10,25 @@
                 center: {lat: 0, lng: 0}  // Центр карты
             });
 
-            // Пример данных, замените на ваши данные из JSON-файла или сервера
-            var locations = [
-                {lat: 40.712776, lng: -74.005974, name: 'New York'},
-                {lat: 34.052235, lng: -118.243683, name: 'Los Angeles'}
-            ];
-
-            locations.forEach(function(location) {
-                var marker = new google.maps.Marker({
-                    position: {lat: location.lat, lng: location.lng},
-                    map: map,
-                    title: location.name
+            fetch('../locations.json')  // Путь к JSON-файлу
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(locations => {
+                    locations.forEach(function(location) {
+                        var marker = new google.maps.Marker({
+                            position: {lat: location.lat, lng: location.lng},
+                            map: map,
+                            title: location.name
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
                 });
-            });
         }
     </script>
 </head>
