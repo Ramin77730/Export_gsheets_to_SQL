@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps Integration</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: {lat: 0, lng: 0}  // Центр карты
+            });
+
+            // Пример данных, замените на ваши данные из JSON-файла или сервера
+            var locations = [
+                {lat: 40.712776, lng: -74.005974, name: 'New York'},
+                {lat: 34.052235, lng: -118.243683, name: 'Los Angeles'}
+            ];
+
+            locations.forEach(function(location) {
+                var marker = new google.maps.Marker({
+                    position: {lat: location.lat, lng: location.lng},
+                    map: map,
+                    title: location.name
+                });
+            });
+        }
+    </script>
+</head>
+<body onload="initMap()">
+    <div id="map" style="height: 500px; width: 100%;"></div>
+</body>
+</html>
