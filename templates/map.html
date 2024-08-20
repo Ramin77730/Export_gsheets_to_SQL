@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Google Maps Integration</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV58EvulUiNHgNMI8bWQd1p8roIRl-Zlc&callback=initMap" async defer></script>
     <script>
@@ -10,13 +11,8 @@
                 center: {lat: 0, lng: 0}  // Центр карты
             });
 
-            fetch('../locations.json')  // Путь к JSON-файлу
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+            fetch('../locations.json')
+                .then(response => response.json())
                 .then(locations => {
                     locations.forEach(function(location) {
                         var marker = new google.maps.Marker({
@@ -26,13 +22,51 @@
                         });
                     });
                 })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
+                .catch(error => console.error('There was a problem with the fetch operation:', error));
+
+            // Функция для построения маршрута
+            document.getElementById("route-form").onsubmit = function(e) {
+                e.preventDefault();
+                calculateAndDisplayRoute(map);
+            }
+        }
+
+        function calculateAndDisplayRoute(map) {
+            var directionsService = new google.maps.DirectionsService();
+            var directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            var start = document.getElementById('start').value;
+            var end = document.getElementById('end').value;
+
+            directionsService.route(
+                {
+                    origin: start,
+                    destination: end,
+                    travelMode: 'DRIVING'
+                },
+                function(response, status) {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+                    } else {
+                        alert('Directions request failed due to ' + status);
+                    }
+                }
+            );
         }
     </script>
 </head>
 <body onload="initMap()">
     <div id="map" style="height: 500px; width: 100%;"></div>
+
+    <form id="route-form">
+        <label for="start">Пункт отправления:</label>
+        <input type="text" id="start" name="start" required>
+        <br><br>
+        <label for="end">Пункт назначения:</label>
+        <input type="text" id="end" name="end" required>
+        <br><br>
+        <button type="submit">Построить маршрут</button>
+    </form>
 </body>
 </html>
