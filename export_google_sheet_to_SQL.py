@@ -14,34 +14,56 @@ credentials = Credentials.from_service_account_file(credentials_path, scopes=sco
 client = gspread.authorize(credentials)
 
 # Открытие таблицы Google Sheets
-spreadsheet = client.open("locations")  # Замените на точное имя таблицы
+spreadsheet = client.open("Data_1")
 sheet = spreadsheet.sheet1
 
 # Подключение к базе данных PostgreSQL
 conn = psycopg2.connect(
-    host="localhost",  # Замените на ваш хост
-    database="locations",  # Имя вашей базы данных
-    user="postgres",  # Ваше имя пользователя
-    password="75495"  # Ваш пароль
+    host="localhost",
+    database="locations",
+    user="postgres",
+    password="75495"
 )
 cursor = conn.cursor()
 
-# Импорт данных из Google Sheets
-rows = sheet.get_all_values()[1:]  # Пропустить заголовок
-for row in rows:
-    point_name, coordinates = row
-    latitude, longitude = map(float, coordinates.split(','))
-    wkt = f"POINT({longitude} {latitude})"
-    cursor.execute(
-        "INSERT INTO marks (point_name, point_location) VALUES (%s, ST_GeomFromText(%s))",
-        (point_name, wkt)
-    )
+# Получение заголовков и данных
+headers = sheet.row_values(1)  # Первая строка (заголовки)
+rows = sheet.get_all_values()[1:]  # Остальные строки с данными
 
-# Сохранение изменений в базе данных
+# Функция для обработки пустых ячеек
+def process_value(value):
+    if value == '':
+        return None  # Если ячейка пуста, возвращаем None
+    return value
+
+# Вставка данных из Google Sheets в таблицу PostgreSQL
+for row in rows:
+    # Преобразование всех значений строки, включая обработку пустых ячеек
+    processed_row = [process_value(value) for value in row]
+
+    # Преобразование координат в формат POINT
+    if processed_row[-1]:  # Проверяем, что координаты не пусты
+        lat, lon = processed_row[-1].split(",")  # Разделяем широту и долготу
+        coordinates = f"POINT({lon.strip()} {lat.strip()})"  # Форматируем в POINT
+    else:
+        coordinates = None
+
+    # Обновление строки для вставки данных, включая новый столбец photo_5 и координаты
+    cursor.execute("""
+        INSERT INTO data_1 (
+            name, voltage, length_1, length_2, length_3, length_4, length_5,
+            width_1, width_2, width_3, photo_1, photo_2, photo_3, photo_4, photo_5, coordinates
+        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326))
+    """, (*processed_row[:-1], coordinates))  # Все значения строки, кроме последнего, и преобразованные координаты
+
+# Сохранение изменений
 conn.commit()
+
+# Проверка количества записей в таблице
+cursor.execute("SELECT COUNT(*) FROM data_1")
+count = cursor.fetchone()[0]
+print(f"Количество записей в таблице data_1 после вставки всех строк: {count}")
 
 # Закрытие соединения с базой данных
 cursor.close()
 conn.close()
-
-print("Данные успешно импортированы!")
