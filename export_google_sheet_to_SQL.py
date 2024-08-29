@@ -3,7 +3,7 @@ from google.oauth2.service_account import Credentials
 import psycopg2
 
 # Путь к вашему файлу учетных данных JSON
-credentials_path = 'D:/Рамин/Automation/Google_API/credentials.json'
+credentials_path = r'R:\Мой диск\Google_API\credentials.json'
 
 # Настройка подключения к Google Sheets
 scopes = [
@@ -36,25 +36,39 @@ def process_value(value):
         return None  # Если ячейка пуста, возвращаем None
     return value
 
+# Функция для проверки, является ли строка числом
+def is_float(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
 # Вставка данных из Google Sheets в таблицу PostgreSQL
 for row in rows:
     # Преобразование всех значений строки, включая обработку пустых ячеек
     processed_row = [process_value(value) for value in row]
 
     # Преобразование координат в формат POINT
-    if processed_row[-1]:  # Проверяем, что координаты не пусты
-        lat, lon = processed_row[-1].split(",")  # Разделяем широту и долготу
-        coordinates = f"POINT({lon.strip()} {lat.strip()})"  # Форматируем в POINT
+    coordinates_str = processed_row[-3].strip()  # Корректируем индекс для координат
+    if coordinates_str and "," in coordinates_str:  # Проверяем, что координаты не пусты и содержат запятую
+        lat, lon = coordinates_str.split(",", 1)  # Разделяем только по первой запятой
+        if is_float(lat) and is_float(lon):  # Проверяем, что широта и долгота - числа
+            coordinates = f"POINT({lon.strip()} {lat.strip()})"  # Форматируем в POINT
+        else:
+            print(f"Неверный формат координат: '{coordinates_str}'. Пропуск строки.")
+            continue
     else:
-        coordinates = None
+        print(f"Неверный формат координат: '{coordinates_str}'. Пропуск строки.")
+        continue
 
-    # Обновление строки для вставки данных, включая новый столбец photo_5 и координаты
+    # Обновление строки для вставки данных, включая координаты
     cursor.execute("""
         INSERT INTO data_1 (
             name, voltage, length_1, length_2, length_3, length_4, length_5,
-            width_1, width_2, width_3, photo_1, photo_2, photo_3, photo_4, photo_5, coordinates
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326))
-    """, (*processed_row[:-1], coordinates))  # Все значения строки, кроме последнего, и преобразованные координаты
+            width_1, width_2, width_3, photo_1, photo_2, photo_3, photo_4, photo_5, coordinates, comments, date
+        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326), %s, %s)
+    """, (*processed_row[:-3], coordinates, processed_row[-2], processed_row[-1]))  # Все значения строки, кроме последних трех (координаты, комментарии и дата)
 
 # Сохранение изменений
 conn.commit()

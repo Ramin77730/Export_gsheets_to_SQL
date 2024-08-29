@@ -1,0 +1,12 @@
+pip~=23.2.1
+rsa~=4.9
+pyasn1~=0.6.0
+pyasn1_modules~=0.4.0
+cachetools~=5.5.0
+certifi~=2024.7.4
+urllib3~=2.2.2
+requests~=2.32.3
+oauthlib~=3.2.2
+idna~=3.8
+gspread~=6.1.2
+psycopg2~=2.9.9
