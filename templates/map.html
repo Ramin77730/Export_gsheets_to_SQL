@@ -8,7 +8,13 @@
         let map, directionsService, directionsRenderer;
 
         function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
+            const mapElement = document.getElementById('map');
+            if (!mapElement) {
+                console.error("Element with id 'map' not found.");
+                return;
+            }
+
+            map = new google.maps.Map(mapElement, {
                 zoom: 5,
                 center: {lat: 43.20799, lng: 76.88373}  // Центр карты
             });
@@ -25,6 +31,7 @@
                     return response.json();
                 })
                 .then(locations => {
+                    console.log('Fetched locations:', locations);  // Логируем полученные данные
                     locations.forEach(function(location) {
                         var marker = new google.maps.Marker({
                             position: {lat: location.lat, lng: location.lng},
@@ -46,8 +53,10 @@
 
         function generateInfoWindowContent(location) {
             let content = `<div><h3>${location.name}</h3>`;
+            console.log('Generating content for location:', location);  // Логируем данные для инфо-окна
             if (location.photos && location.photos.length > 0) {
                 location.photos.forEach(photo => {
+                    console.log('Adding photo:', photo);  // Логируем URL изображения
                     content += `<img src="${photo}" alt="Фото" style="width:100px;height:auto;margin:5px;">`;
                 });
             } else {
