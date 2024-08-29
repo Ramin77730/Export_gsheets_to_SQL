@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Google Maps Integration</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV58EvulUiNHgNMI8bWQd1p8roIRl-Zlc&callback=initMap" async defer></script>
     <script>
+        let map, directionsService, directionsRenderer;
+
         function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 5,
-                center: {lat: 0, lng: 0}  // Центр карты
+                center: {lat: 43.20799, lng: 76.88373}  // Центр карты
             });
 
-            fetch('../locations.json')
-                .then(response => response.json())
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            fetch('../locations.json')  // Путь к JSON-файлу
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка сети: ' + response.status);
+                    }
+                    return response.json();
+                })
                 .then(locations => {
                     locations.forEach(function(location) {
                         var marker = new google.maps.Marker({
@@ -20,53 +31,62 @@
                             map: map,
                             title: location.name
                         });
+
+                        var infowindow = new google.maps.InfoWindow({
+                            content: generateInfoWindowContent(location)
+                        });
+
+                        marker.addListener('click', function() {
+                            infowindow.open(map, marker);
+                        });
                     });
                 })
-                .catch(error => console.error('There was a problem with the fetch operation:', error));
-
-            // Функция для построения маршрута
-            document.getElementById("route-form").onsubmit = function(e) {
-                e.preventDefault();
-                calculateAndDisplayRoute(map);
-            }
+                .catch(error => console.error('Ошибка выполнения запроса fetch:', error));
         }
 
-        function calculateAndDisplayRoute(map) {
-            var directionsService = new google.maps.DirectionsService();
-            var directionsRenderer = new google.maps.DirectionsRenderer();
-            directionsRenderer.setMap(map);
+        function generateInfoWindowContent(location) {
+            let content = `<div><h3>${location.name}</h3>`;
+            if (location.photos && location.photos.length > 0) {
+                location.photos.forEach(photo => {
+                    content += `<img src="${photo}" alt="Фото" style="width:100px;height:auto;margin:5px;">`;
+                });
+            } else {
+                content += `<p>Фото отсутствуют.</p>`;
+            }
+            content += `</div>`;
+            return content;
+        }
 
-            var start = document.getElementById('start').value;
-            var end = document.getElementById('end').value;
+        function calculateRoute() {
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
 
-            directionsService.route(
-                {
+            if (start && end) {
+                const request = {
                     origin: start,
                     destination: end,
-                    travelMode: 'DRIVING'
-                },
-                function(response, status) {
+                    travelMode: 'DRIVING'  // Вы можете изменить на WALKING, BICYCLING, TRANSIT
+                };
+
+                directionsService.route(request, function(result, status) {
                     if (status === 'OK') {
-                        directionsRenderer.setDirections(response);
+                        directionsRenderer.setDirections(result);
                     } else {
-                        alert('Directions request failed due to ' + status);
+                        alert('Маршрут не может быть построен: ' + status);
                     }
-                }
-            );
+                });
+            } else {
+                alert('Пожалуйста, укажите начальную и конечную точки.');
+            }
         }
     </script>
 </head>
 <body onload="initMap()">
+    <div>
+        <input id="start" type="text" placeholder="Пункт отправления">
+        <input id="end" type="text" placeholder="Пункт назначения">
+        <button onclick="calculateRoute()">Построить маршрут</button>
+    </div>
     <div id="map" style="height: 500px; width: 100%;"></div>
-
-    <form id="route-form">
-        <label for="start">Пункт отправления:</label>
-        <input type="text" id="start" name="start" required>
-        <br><br>
-        <label for="end">Пункт назначения:</label>
-        <input type="text" id="end" name="end" required>
-        <br><br>
-        <button type="submit">Построить маршрут</button>
-    </form>
 </body>
 </html>
