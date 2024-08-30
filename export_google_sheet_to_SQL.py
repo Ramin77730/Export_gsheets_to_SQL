@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import psycopg2
+from urllib.parse import urlparse, parse_qs
 
 # Путь к вашему файлу учетных данных JSON
 credentials_path = r'R:\Мой диск\Google_API\credentials.json'
@@ -36,6 +37,17 @@ def process_value(value):
         return None  # Если ячейка пуста, возвращаем None
     return value
 
+# Функция для извлечения ID из ссылки на Google Диск
+def extract_drive_id(url):
+    parsed_url = urlparse(url)
+    if 'drive.google.com' in parsed_url.netloc:
+        query_params = parse_qs(parsed_url.query)
+        if 'id' in query_params:
+            return query_params['id'][0]
+        elif parsed_url.path.startswith('/file/d/'):
+            return parsed_url.path.split('/')[3]
+    return url  # Возвращаем оригинальное значение, если не удалось извлечь ID
+
 # Функция для проверки, является ли строка числом
 def is_float(value):
     try:
@@ -48,6 +60,11 @@ def is_float(value):
 for row in rows:
     # Преобразование всех значений строки, включая обработку пустых ячеек
     processed_row = [process_value(value) for value in row]
+
+    # Извлечение ID для фотографий
+    for i in range(10, 15):  # Предположим, что фото хранятся в столбцах с 11 по 15
+        if processed_row[i]:
+            processed_row[i] = extract_drive_id(processed_row[i])
 
     # Преобразование координат в формат POINT
     coordinates_str = processed_row[-3].strip()  # Корректируем индекс для координат
