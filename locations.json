@@ -1,314 +1,340 @@
 [
     {
-        "name": "Арка",
-        "voltage": null,
-        "lengths": {
-            "length_1": 8.15,
-            "length_2": 8.36,
-            "length_3": 6.79,
-            "length_4": 8.45,
-            "length_5": 6.31
-        },
-        "widths": {
-            "width_1": 6.19,
-            "width_2": 8.34,
-            "width_3": 8.36
-        },
-        "lng": 74.82081899295234,
-        "lat": 44.459776495493486,
+        "id": 27,
+        "name": "ЛЭП",
+        "voltage": 220,
+        "length_1": 8.15,
+        "length_2": 8.36,
+        "length_3": 6.79,
+        "length_4": 8.45,
+        "length_5": 6.31,
+        "width_1": 6.19,
+        "width_2": 8.34,
+        "width_3": 8.36,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=17Kb37Xbz6JrKk0WxgPXeBHJioBCzEcK_",
-            "https://drive.google.com/uc?export=view&id=1ScUHF7bTzl-omlog21bBdOlS_difwnSs"
+            "17Kb37Xbz6JrKk0WxgPXeBHJioBCzEcK_",
+            "1ScUHF7bTzl-omlog21bBdOlS_difwnSs",
+            null,
+            null,
+            null
         ],
-        "comments": "132",
+        "coordinates": {
+            "lat": 44.459776495493486,
+            "lng": 74.82081899295234
+        },
+        "comments": "Сентябрь",
         "date": "2024-03-18"
     },
     {
-        "name": "Группа_ЛЭП",
-        "voltage": 220,
-        "lengths": {
-            "length_1": 5.44,
-            "length_2": 5.73,
-            "length_3": 8.0,
-            "length_4": 7.76,
-            "length_5": 8.85
-        },
-        "widths": {
-            "width_1": 4.42,
-            "width_2": 6.27,
-            "width_3": 8.02
-        },
-        "lng": 73.95330010075291,
-        "lat": 45.15033754783087,
+        "id": 28,
+        "name": "Арка",
+        "voltage": null,
+        "length_1": 5.44,
+        "length_2": 5.73,
+        "length_3": 8.0,
+        "length_4": 7.76,
+        "length_5": 8.85,
+        "width_1": 4.42,
+        "width_2": 6.27,
+        "width_3": 8.02,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1drntKUwcxkb7UVXkSRIt_G7XYO-CppL4",
-            "https://drive.google.com/uc?export=view&id=1ZWB0HK_cPFFf1avK8zvtgYRCEgMaTTtr"
+            "1drntKUwcxkb7UVXkSRIt_G7XYO-CppL4",
+            "1ZWB0HK_cPFFf1avK8zvtgYRCEgMaTTtr",
+            null,
+            null,
+            null
         ],
-        "comments": "133",
+        "coordinates": {
+            "lat": 45.15033754783087,
+            "lng": 73.95330010075291
+        },
+        "comments": "Октябрь",
         "date": "2024-03-19"
     },
     {
-        "name": "ЛЭП",
-        "voltage": 500,
-        "lengths": {
-            "length_1": 6.47,
-            "length_2": 6.47,
-            "length_3": 4.88,
-            "length_4": 8.65,
-            "length_5": 4.65
-        },
-        "widths": {
-            "width_1": 8.66,
-            "width_2": 5.92,
-            "width_3": 6.34
-        },
-        "lng": 74.36793586983515,
-        "lat": 44.71621837496847,
+        "id": 29,
+        "name": "Проезд_под_мостом",
+        "voltage": null,
+        "length_1": 6.47,
+        "length_2": 6.47,
+        "length_3": 4.88,
+        "length_4": 8.65,
+        "length_5": 4.65,
+        "width_1": 8.66,
+        "width_2": 5.92,
+        "width_3": 6.34,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1Jiaj4KI9EX7x2JOmHKra8668Asxp5zXJ",
-            "https://drive.google.com/uc?export=view&id=1MHGuWWUQlVFBKMpNivm7qhEiXqyf3_1O"
+            null,
+            "1MHGuWWUQlVFBKMpNivm7qhEiXqyf3_1O",
+            null,
+            null,
+            null
         ],
-        "comments": "134",
+        "coordinates": {
+            "lat": 44.71621837496847,
+            "lng": 74.36793586983515
+        },
+        "comments": "Ноябрь",
         "date": "2024-03-20"
     },
     {
+        "id": 30,
         "name": "Рамка",
         "voltage": null,
-        "lengths": {
-            "length_1": 6.47,
-            "length_2": 4.8,
-            "length_3": 4.94,
-            "length_4": 4.79,
-            "length_5": 8.93
-        },
-        "widths": {
-            "width_1": 8.98,
-            "width_2": 3.5,
-            "width_3": 5.83
-        },
-        "lng": 74.94982359616111,
-        "lat": 46.875912105777665,
+        "length_1": 6.47,
+        "length_2": 4.8,
+        "length_3": 4.94,
+        "length_4": 4.79,
+        "length_5": 8.93,
+        "width_1": 8.98,
+        "width_2": 3.5,
+        "width_3": 5.83,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1H61-NyEjqIlqdyAo7uwRePiBHO7Ij988",
-            "https://drive.google.com/uc?export=view&id=1dVzCcpG-0Jx_cm-VsD5qcqo_hfCv1zwQ"
+            "1H61-NyEjqIlqdyAo7uwRePiBHO7Ij988",
+            "1dVzCcpG-0Jx_cm-VsD5qcqo_hfCv1zwQ",
+            null,
+            null,
+            null
         ],
-        "comments": "135",
+        "coordinates": {
+            "lat": 46.875912105777665,
+            "lng": 74.94982359616111
+        },
+        "comments": "Декабрь",
         "date": "2024-03-21"
     },
     {
-        "name": "Группа_ЛЭП",
-        "voltage": 500,
-        "lengths": {
-            "length_1": 5.74,
-            "length_2": 5.18,
-            "length_3": 8.51,
-            "length_4": 7.7,
-            "length_5": 6.59
-        },
-        "widths": {
-            "width_1": 6.24,
-            "width_2": 4.25,
-            "width_3": 6.58
-        },
-        "lng": 74.9114239363015,
-        "lat": 47.03089182406318,
+        "id": 31,
+        "name": "Поворот",
+        "voltage": null,
+        "length_1": 5.74,
+        "length_2": 5.18,
+        "length_3": 8.51,
+        "length_4": 7.7,
+        "length_5": 6.59,
+        "width_1": 6.24,
+        "width_2": 4.25,
+        "width_3": 6.58,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1eGoL6YipDAoEChXyawVygOQg5VnwOKnr",
-            "https://drive.google.com/uc?export=view&id=1HbcOPJPG6yXD-EjrO0WujAFVQAeFKMrk"
+            "1eGoL6YipDAoEChXyawVygOQg5VnwOKnr",
+            null,
+            null,
+            null,
+            null
         ],
-        "comments": "136",
+        "coordinates": {
+            "lat": 47.03089182406318,
+            "lng": 74.9114239363015
+        },
+        "comments": "Январь",
         "date": "2024-03-22"
     },
     {
-        "name": "Рамка",
+        "id": 32,
+        "name": "Поворот",
         "voltage": null,
-        "lengths": {
-            "length_1": 8.03,
-            "length_2": 4.99,
-            "length_3": 6.62,
-            "length_4": null,
-            "length_5": 7.84
-        },
-        "widths": {
-            "width_1": 8.61,
-            "width_2": 5.26,
-            "width_3": 7.69
-        },
-        "lng": 74.66749837522099,
-        "lat": 47.394997707406574,
+        "length_1": 8.03,
+        "length_2": 4.99,
+        "length_3": 6.62,
+        "length_4": null,
+        "length_5": 7.84,
+        "width_1": 8.61,
+        "width_2": 5.26,
+        "width_3": 7.69,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1DRwzFm4EEEUvqhaK9Y4dvHaEw3f3e1a6",
-            "https://drive.google.com/uc?export=view&id=1y8uxD7gU4SdxVLF-pSYmm4BfTwhdGy0W"
+            "1DRwzFm4EEEUvqhaK9Y4dvHaEw3f3e1a6",
+            "1y8uxD7gU4SdxVLF-pSYmm4BfTwhdGy0W",
+            null,
+            null,
+            null
         ],
-        "comments": "137",
+        "coordinates": {
+            "lat": 47.394997707406574,
+            "lng": 74.66749837522099
+        },
+        "comments": "Феварль",
         "date": "2024-03-23"
     },
     {
-        "name": "ЛЭП",
-        "voltage": 220,
-        "lengths": {
-            "length_1": 8.49,
-            "length_2": 6.58,
-            "length_3": null,
-            "length_4": 6.26,
-            "length_5": 8.29
-        },
-        "widths": {
-            "width_1": 6.1,
-            "width_2": 4.31,
-            "width_3": 7.23
-        },
-        "lng": 73.69664008777963,
-        "lat": 48.578445417558804,
+        "id": 33,
+        "name": "Арка",
+        "voltage": null,
+        "length_1": 8.49,
+        "length_2": 6.58,
+        "length_3": null,
+        "length_4": 6.26,
+        "length_5": 8.29,
+        "width_1": 6.1,
+        "width_2": 4.31,
+        "width_3": 7.23,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1YyRsp2VOmBjdmrfAeQ68HfMwN4IdhIiX",
-            "https://drive.google.com/uc?export=view&id=1PjiqgD8T6445UaaQXU_Wro_5S0PU7FmD"
+            "1YyRsp2VOmBjdmrfAeQ68HfMwN4IdhIiX",
+            "1PjiqgD8T6445UaaQXU_Wro_5S0PU7FmD",
+            null,
+            null,
+            null
         ],
-        "comments": "138",
+        "coordinates": {
+            "lat": 48.578445417558804,
+            "lng": 73.69664008777963
+        },
+        "comments": "Март",
         "date": "2024-03-24"
     },
     {
-        "name": "ЛЭП",
-        "voltage": 60,
-        "lengths": {
-            "length_1": 7.43,
-            "length_2": 5.95,
-            "length_3": 7.32,
-            "length_4": 5.82,
-            "length_5": null
-        },
-        "widths": {
-            "width_1": 4.34,
-            "width_2": 4.84,
-            "width_3": 8.45
-        },
-        "lng": 73.34094597413721,
-        "lat": 49.441618190015056,
+        "id": 34,
+        "name": "Проезд_под_мостом",
+        "voltage": null,
+        "length_1": 7.43,
+        "length_2": 5.95,
+        "length_3": 7.32,
+        "length_4": 5.82,
+        "length_5": null,
+        "width_1": 4.34,
+        "width_2": 4.84,
+        "width_3": 8.45,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1r4egVOvLPxmx6f0CL7QoKDsCJTTOp5Mv",
-            "https://drive.google.com/uc?export=view&id=18Uu5A6T6WmCJIqLBbun7HaKQNpIewbOU"
+            "1r4egVOvLPxmx6f0CL7QoKDsCJTTOp5Mv",
+            "18Uu5A6T6WmCJIqLBbun7HaKQNpIewbOU",
+            null,
+            null,
+            null
         ],
-        "comments": "139",
+        "coordinates": {
+            "lat": 49.441618190015056,
+            "lng": 73.34094597413721
+        },
+        "comments": "Апрель-капель",
         "date": "2024-03-25"
     },
     {
+        "id": 35,
         "name": "Арка",
         "voltage": null,
-        "lengths": {
-            "length_1": 4.5,
-            "length_2": 5.35,
-            "length_3": 6.2,
-            "length_4": 5.48,
-            "length_5": null
-        },
-        "widths": {
-            "width_1": 5.03,
-            "width_2": 8.82,
-            "width_3": 7.54
-        },
-        "lng": 73.22623665520393,
-        "lat": 49.59379519433911,
+        "length_1": 4.5,
+        "length_2": 5.35,
+        "length_3": 6.2,
+        "length_4": 5.48,
+        "length_5": null,
+        "width_1": 5.03,
+        "width_2": 8.82,
+        "width_3": 7.54,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1NBfqy-ZGsHHHZhTB7LvVy3TT4ubx880Q",
-            "https://drive.google.com/uc?export=view&id=17Qo6RbPmSVJVRl85uNVQ6pSU_3oOpQW5"
+            "1NBfqy-ZGsHHHZhTB7LvVy3TT4ubx880Q",
+            "17Qo6RbPmSVJVRl85uNVQ6pSU_3oOpQW5",
+            null,
+            null,
+            null
         ],
-        "comments": "140",
+        "coordinates": {
+            "lat": 49.59379519433911,
+            "lng": 73.22623665520393
+        },
+        "comments": "май рай",
         "date": "2024-03-26"
     },
     {
+        "id": 36,
         "name": "Рамка",
         "voltage": null,
-        "lengths": {
-            "length_1": 8.98,
-            "length_2": 8.11,
-            "length_3": 6.93,
-            "length_4": null,
-            "length_5": null
-        },
-        "widths": {
-            "width_1": 8.81,
-            "width_2": 6.42,
-            "width_3": 8.71
-        },
-        "lng": 73.81853817937277,
-        "lat": 46.348915690647324,
+        "length_1": 8.98,
+        "length_2": 8.11,
+        "length_3": 6.93,
+        "length_4": null,
+        "length_5": null,
+        "width_1": 8.81,
+        "width_2": 6.42,
+        "width_3": 8.71,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1Ex9705A0K7MlXi_Cz7ZvtrHA3XTz1-YM",
-            "https://drive.google.com/uc?export=view&id=17c6Pql-cY9dTvuOIaqc2MxS0kZD4QrnM"
+            "1Ex9705A0K7MlXi_Cz7ZvtrHA3XTz1-YM",
+            "17c6Pql-cY9dTvuOIaqc2MxS0kZD4QrnM",
+            null,
+            null,
+            null
         ],
-        "comments": "141",
+        "coordinates": {
+            "lat": 46.348915690647324,
+            "lng": 73.81853817937277
+        },
+        "comments": "  июнь",
         "date": "2024-03-27"
     },
     {
-        "name": "Проезд_под_мостом",
+        "id": 37,
+        "name": "Арка",
         "voltage": null,
-        "lengths": {
-            "length_1": null,
-            "length_2": null,
-            "length_3": null,
-            "length_4": null,
-            "length_5": null
-        },
-        "widths": {
-            "width_1": null,
-            "width_2": null,
-            "width_3": null
-        },
-        "lng": 76.69836489545436,
-        "lat": 43.47062521994513,
+        "length_1": null,
+        "length_2": null,
+        "length_3": null,
+        "length_4": null,
+        "length_5": null,
+        "width_1": null,
+        "width_2": null,
+        "width_3": null,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1Cc-Y0C_AVkdd9KrieSN5su0tbPkGHswE",
-            "https://drive.google.com/uc?export=view&id=1-zFZ5rouLrM0PaZhedgHUSuSAekXGqxF"
+            "1Cc-Y0C_AVkdd9KrieSN5su0tbPkGHswE",
+            "1-zFZ5rouLrM0PaZhedgHUSuSAekXGqxF",
+            null,
+            null,
+            null
         ],
-        "comments": "142",
+        "coordinates": {
+            "lat": 43.47062521994513,
+            "lng": 76.69836489545436
+        },
+        "comments": "Август!! ",
         "date": "2024-03-28"
     },
     {
-        "name": "Ограждение",
+        "id": 38,
+        "name": "Рамка",
         "voltage": null,
-        "lengths": {
-            "length_1": 5.85,
-            "length_2": 4.17,
-            "length_3": 5.42,
-            "length_4": 7.54,
-            "length_5": 7.5
-        },
-        "widths": {
-            "width_1": 5.36,
-            "width_2": 7.27,
-            "width_3": 8.21
-        },
-        "lng": 76.69836489545436,
-        "lat": 43.47062521994513,
+        "length_1": 5.85,
+        "length_2": 4.17,
+        "length_3": 5.42,
+        "length_4": 7.54,
+        "length_5": 7.5,
+        "width_1": 5.36,
+        "width_2": 7.27,
+        "width_3": 8.21,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=1utf5RBgRnnFbEQNSwRyy3Pb1qh5Tp3-_",
-            "https://drive.google.com/uc?export=view&id=1PMzgMawO-dbu3-oYpvSKMj0wfQr7_H20"
+            "1utf5RBgRnnFbEQNSwRyy3Pb1qh5Tp3-_",
+            "1PMzgMawO-dbu3-oYpvSKMj0wfQr7_H20",
+            null,
+            null,
+            null
         ],
-        "comments": "143",
+        "coordinates": {
+            "lat": 43.47062521994513,
+            "lng": 76.69836489545436
+        },
+        "comments": "Октябрь",
         "date": "2024-03-29"
     },
     {
-        "name": "Поворот",
-        "voltage": null,
-        "lengths": {
-            "length_1": 4.48,
-            "length_2": 4.87,
-            "length_3": 4.12,
-            "length_4": 5.65,
-            "length_5": 7.4
-        },
-        "widths": {
-            "width_1": null,
-            "width_2": 8.95,
-            "width_3": 4.73
-        },
-        "lng": 76.69836489545436,
-        "lat": 43.47062521994513,
+        "id": 39,
+        "name": "Группа_ЛЭП",
+        "voltage": 500,
+        "length_1": 4.48,
+        "length_2": 4.87,
+        "length_3": 4.12,
+        "length_4": 5.65,
+        "length_5": 7.4,
+        "width_1": null,
+        "width_2": null,
+        "width_3": 4.73,
         "photos": [
-            "https://drive.google.com/uc?export=view&id=14AgV5rDFnw3X1kO6NMUjS3uU6-asSR3I",
-            "https://drive.google.com/uc?export=view&id=1U-i5kzxB_swqp_Cj_Rh6NL7C44CJZzQh"
+            null,
+            "1U-i5kzxB_swqp_Cj_Rh6NL7C44CJZzQh",
+            null,
+            null,
+            null
         ],
-        "comments": "144",
+        "coordinates": {
+            "lat": 43.47062521994513,
+            "lng": 76.69836489545436
+        },
+        "comments": "НоябрьRRR",
         "date": "2024-03-30"
     }
 ]

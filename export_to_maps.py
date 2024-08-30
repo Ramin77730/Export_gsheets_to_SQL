@@ -1,86 +1,72 @@
 import psycopg2
 import json
+import os
 from decimal import Decimal
-from datetime import date
 
-
-# Функция для преобразования типов данных в JSON-совместимые форматы
-def convert_to_serializable(obj):
-    if isinstance(obj, Decimal):
-        return float(obj)
-    if isinstance(obj, date):
-        return obj.isoformat()  # Преобразуем дату в строку в формате ISO (YYYY-MM-DD)
-    raise TypeError(f"Type {obj.__class__.__name__} not serializable")
-
-
-# Подключение к базе данных PostgreSQL
+# Параметры подключения к базе данных
 conn = psycopg2.connect(
-    host="localhost",  # Хост базы данных
-    database="locations",  # Имя базы данных
-    user="postgres",  # Имя пользователя базы данных
-    password="75495"  # Пароль пользователя
+    host="localhost",
+    database="locations",
+    user="postgres",
+    password="75495"
 )
 cursor = conn.cursor()
 
-# Извлечение данных из таблицы, включая все необходимые поля
+# SQL-запрос для извлечения данных из таблицы
 cursor.execute("""
-    SELECT 
-        name,
-        voltage,
-        length_1,
-        length_2,
-        length_3,
-        length_4,
-        length_5,
-        width_1,
-        width_2,
-        width_3,
-        ST_X(coordinates::geometry) AS lng, 
-        ST_Y(coordinates::geometry) AS lat,
-        photo_1, 
-        photo_2, 
-        photo_3, 
-        photo_4, 
-        photo_5,
-        comments,
-        date
+    SELECT id, name, voltage, length_1, length_2, length_3, length_4, length_5,
+           width_1, width_2, width_3, photo_1, photo_2, photo_3, photo_4, photo_5,
+           ST_X(coordinates) as lng, ST_Y(coordinates) as lat, comments, date
     FROM data_1
 """)
-data = cursor.fetchall()
+rows = cursor.fetchall()
 
-# Форматирование данных в список словарей
-locations = []
-for row in data:
-    photos = [photo for photo in row[12:17] if photo]  # Фильтруем пустые ссылки на фото
+# Функция для преобразования объекта Decimal в float или строку
+def convert_decimal(value):
+    if isinstance(value, Decimal):
+        return float(value)
+    return value
 
-    locations.append({
-        "name": row[0],  # Название локации
-        "voltage": row[1],  # Напряжение
-        "lengths": {  # Длины
-            "length_1": row[2],
-            "length_2": row[3],
-            "length_3": row[4],
-            "length_4": row[5],
-            "length_5": row[6],
+# Преобразование данных в формат JSON
+data = []
+for row in rows:
+    record = {
+        "id": row[0],
+        "name": row[1],
+        "voltage": row[2],
+        "length_1": convert_decimal(row[3]),
+        "length_2": convert_decimal(row[4]),
+        "length_3": convert_decimal(row[5]),
+        "length_4": convert_decimal(row[6]),
+        "length_5": convert_decimal(row[7]),
+        "width_1": convert_decimal(row[8]),
+        "width_2": convert_decimal(row[9]),
+        "width_3": convert_decimal(row[10]),
+        "photos": [
+            row[11],  # photo_1
+            row[12],  # photo_2
+            row[13],  # photo_3
+            row[14],  # photo_4
+            row[15]   # photo_5
+        ],
+        "coordinates": {
+            "lat": convert_decimal(row[17]),
+            "lng": convert_decimal(row[16])
         },
-        "widths": {  # Ширины
-            "width_1": row[7],
-            "width_2": row[8],
-            "width_3": row[9],
-        },
-        "lng": row[10],  # Долгота
-        "lat": row[11],  # Широта
-        "photos": photos,  # Ссылки на фото
-        "comments": row[17],  # Комментарии
-        "date": row[18]  # Дата
-    })
+        "comments": row[18],
+        "date": row[19].isoformat() if row[19] else None  # Преобразование даты в формат ISO
+    }
+    data.append(record)
 
-# Сохранение данных в JSON-файл с использованием custom encoder
-with open('locations.json', 'w', encoding='utf-8') as json_file:
-    json.dump(locations, json_file, ensure_ascii=False, indent=4, default=convert_to_serializable)
+# Путь к JSON-файлу
+json_file_path = os.path.join(os.path.dirname(__file__), 'data.json')
+
+# Сохранение данных в JSON-файл
+with open(json_file_path, 'w', encoding='utf-8') as json_file:
+    json.dump(data, json_file, ensure_ascii=False, indent=4)
 
 # Закрытие соединения с базой данных
 cursor.close()
 conn.close()
 
-print("Данные успешно экспортированы в locations.json!")
+print(f"Данные успешно сохранены в {json_file_path}")

@@ -1,101 +1,35 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Google Maps Integration</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV58EvulUiNHgNMI8bWQd1p8roIRl-Zlc&callback=initMap" async defer></script>
-    <script>
-        let map, directionsService, directionsRenderer;
+<script>
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 5,
+            center: {lat: 44.459776495493486, lng: 74.82081899295234}
+        });
 
-        function initMap() {
-            const mapElement = document.getElementById('map');
-            if (!mapElement) {
-                console.error("Element with id 'map' not found.");
-                return;
-            }
-
-            map = new google.maps.Map(mapElement, {
-                zoom: 5,
-                center: {lat: 43.20799, lng: 76.88373}  // Центр карты
-            });
-
-            directionsService = new google.maps.DirectionsService();
-            directionsRenderer = new google.maps.DirectionsRenderer();
-            directionsRenderer.setMap(map);
-
-            fetch('../locations.json')  // Путь к JSON-файлу
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Ошибка сети: ' + response.status);
-                    }
-                    return response.json();
-                })
-                .then(locations => {
-                    console.log('Fetched locations:', locations);  // Логируем полученные данные
-                    locations.forEach(function(location) {
-                        var marker = new google.maps.Marker({
-                            position: {lat: location.lat, lng: location.lng},
-                            map: map,
-                            title: location.name
-                        });
-
-                        var infowindow = new google.maps.InfoWindow({
-                            content: generateInfoWindowContent(location)
-                        });
-
-                        marker.addListener('click', function() {
-                            infowindow.open(map, marker);
-                        });
+        // Получение данных с сервера
+        fetch('/api/locations')
+            .then(response => response.json())
+            .then(locations => {
+                locations.forEach(function(location) {
+                    const marker = new google.maps.Marker({
+                        position: {lat: location.lat, lng: location.lng},
+                        map: map,
+                        title: location.name
                     });
-                })
-                .catch(error => console.error('Ошибка выполнения запроса fetch:', error));
-        }
 
-        function generateInfoWindowContent(location) {
-            let content = `<div><h3>${location.name}</h3>`;
-            console.log('Generating content for location:', location);  // Логируем данные для инфо-окна
-            if (location.photos && location.photos.length > 0) {
-                location.photos.forEach(photo => {
-                    console.log('Adding photo:', photo);  // Логируем URL изображения
-                    content += `<img src="${photo}" alt="Фото" style="width:100px;height:auto;margin:5px;">`;
+                    const contentString = `
+                        <div><b>${location.name}</b><br>
+                        <img src="/get_image/${location.file_id}" style="width:200px;height:auto;"><br>
+                        <p>${location.comments}</p></div>
+                    `;
+
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+
+                    marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                    });
                 });
-            } else {
-                content += `<p>Фото отсутствуют.</p>`;
-            }
-            content += `</div>`;
-            return content;
-        }
-
-        function calculateRoute() {
-            const start = document.getElementById('start').value;
-            const end = document.getElementById('end').value;
-
-            if (start && end) {
-                const request = {
-                    origin: start,
-                    destination: end,
-                    travelMode: 'DRIVING'  // Вы можете изменить на WALKING, BICYCLING, TRANSIT
-                };
-
-                directionsService.route(request, function(result, status) {
-                    if (status === 'OK') {
-                        directionsRenderer.setDirections(result);
-                    } else {
-                        alert('Маршрут не может быть построен: ' + status);
-                    }
-                });
-            } else {
-                alert('Пожалуйста, укажите начальную и конечную точки.');
-            }
-        }
-    </script>
-</head>
-<body onload="initMap()">
-    <div>
-        <input id="start" type="text" placeholder="Пункт отправления">
-        <input id="end" type="text" placeholder="Пункт назначения">
-        <button onclick="calculateRoute()">Построить маршрут</button>
-    </div>
-    <div id="map" style="height: 500px; width: 100%;"></div>
-</body>
-</html>
+            });
+    }
+</script>
