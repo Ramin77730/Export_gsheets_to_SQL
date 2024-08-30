@@ -22,8 +22,8 @@
             center: {lat: 44.459776495493486, lng: 74.82081899295234}  // Центр карты
         });
 
-        // Получение данных о локациях из JSON-файла
-        fetch('/data.json')
+        // Получение данных о локациях из JSON API
+        fetch('/api/locations')
             .then(response => response.json())
             .then(locations => {
                 console.log(locations);  // Выводим locations в консоль
@@ -31,21 +31,24 @@
                 locations.forEach(function (location) {
                     console.log('Processing location:', location);  // Отладочное сообщение
 
-                    // Проверка валидности координат
-                    if (typeof location.lat !== 'number' || typeof location.lng !== 'number') {
+                    // Доступ к координатам через location.coordinates
+                    if (typeof location.coordinates.lat !== 'number' || typeof location.coordinates.lng !== 'number') {
                         console.error(`Invalid coordinates for location: ${location.name}`);
                         return;
                     }
 
                     const marker = new google.maps.Marker({
-                        position: {lat: location.lat, lng: location.lng},
+                        position: {lat: location.coordinates.lat, lng: location.coordinates.lng},
                         map: map,
                         title: location.name
                     });
 
+                    const photoId = location.photos.find(photo => photo !== null);  // Получение первого не-null ID фотографии
                     const contentString = `
                         <div><b>${location.name}</b><br>
-                        <img src="/get_image/${location.file_id}" style="width:200px;height:auto;"><br></div>
+                        ${photoId ? `<img src="/get_image/${photoId}" style="width:200px;height:auto;"><br>` : ''}
+                        <p>${location.comments}</p>
+                        </div>
                     `;
 
                     const infowindow = new google.maps.InfoWindow({

@@ -1,20 +1,21 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, send_file, abort
 import json
 import os
+import requests
+from io import BytesIO
 
 app = Flask(__name__)
 
 # Функция для загрузки данных из JSON-файла
 def load_locations():
-    with open(os.path.join(os.path.dirname(__file__), 'locations.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(os.path.dirname(__file__), 'data.json'), 'r', encoding='utf-8') as f:
         locations = json.load(f)
     return locations
 
 # Маршрут для главной страницы
 @app.route('/')
 def index():
-    locations = load_locations()
-    return render_template("index.html", locations=locations)
+    return render_template("index.html")
 
 # Маршрут для получения данных в формате JSON
 @app.route('/api/locations')
